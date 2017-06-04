@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Widget Heading</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+        <div class="navbar-text cl-icon-padding pull-left">
+            <a href="widget-list.html" class="navbar-link cl-text-white">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+
+
+        <div class="pull-left">
+            <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+                Widget Edit
+            </a>
+        </div>
+
+
+        <div class="navbar-text cl-icon-padding pull-right">
+            <a href="widget-list.html" class="navbar-link cl-text-white cl-icon-padding">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+        <form action="widget-list.html">
+            <div class="form-group">
+                <label for="widget-name">Name</label>
+                <input type="text" class="form-control" id="widget-name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="widget-text">Text</label>
+                <textarea id="widget-text" class="form-control" rows="5" placeholder="Text"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="widget-size">Size</label>
+                <input id="widget-size" class="form-control" placeholder="3"></input>
+            </div>
+            <button class="btn btn-danger btn-block" type="submit">Delete</button>
+        </form>
+</div>
+
+
+
+</body>
+</html>
