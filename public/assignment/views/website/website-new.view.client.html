@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Website Edit</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="css/style.css" rel="stylesheet"/>
-</head>
-
-<body>
 
 <nav class="navbar navbar-fixed-top cl-blue-navbar">
     <div class="container-fluid row-fluid">
@@ -26,14 +15,14 @@
         </div>
 
         <div class="pull-left col-sm-offset-3">
-            <a class="cl-text-white navbar-brand cl-text-bold" href="website-edit.html">
-                Edit Websites
+            <a class="cl-text-white navbar-brand cl-text-bold" href="website-new.html">
+                New Websites
             </a>
         </div>
 
 
         <div class="navbar-text cl-icon-padding pull-right">
-            <a href="website-new.html" class="navbar-link cl-text-white cl-icon-padding">
+            <a href="website-list.html" class="navbar-link cl-text-white cl-icon-padding">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
         </div>
@@ -59,16 +48,15 @@
         </ul>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-        <form action="website-list.html">
+        <form>
             <div class="form-group">
-                <label for="website-name">Website Name</label>
+                <label for="website-name">Name</label>
                 <input type="text" class="form-control" id="website-name" placeholder="Name">
             </div>
             <div class="form-group">
-                <label for="website-description">Website Description</label>
+                <label for="website-description">Description</label>
                 <textarea id="website-description" class="form-control" rows="5" placeholder="Description"></textarea>
             </div>
-            <button type="submit" class="btn btn-block btn-danger">Delelte</button>
         </form>
     </div>
 </div>
@@ -80,6 +68,3 @@
         </a>
     </div>
 </nav>
-
-</body>
-</html>
