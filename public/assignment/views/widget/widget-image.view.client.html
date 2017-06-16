@@ -3,7 +3,7 @@
     <div class="container-fluid">
 
         <div class="navbar-text cl-icon-padding pull-left">
-            <a href="widget-list.html" class="navbar-link cl-text-white">
+            <a href="/user/:uid/website/:wid/page/:pid/widget" class="navbar-link cl-text-white">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
@@ -17,7 +17,7 @@
 
 
         <div class="navbar-text cl-icon-padding pull-right">
-            <a href="widget-list.html" class="navbar-link cl-text-white cl-icon-padding">
+            <a href="/user/:uid/website/:wid/page/:pid/widget" class="navbar-link cl-text-white cl-icon-padding">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
         </div>
@@ -26,7 +26,7 @@
 </nav>
 
 <div class="container">
-    <form action="widget-list.html">
+    <form action="/user/:uid/website/:wid/page/:pid/widget">
         <div class="form-group">
             <label for="widget-name">Name</label>
             <input type="text" class="form-control" id="widget-name" placeholder="Name">
@@ -37,11 +37,11 @@
         </div>
         <div class="form-group">
             <label for="widget-url">URL</label>
-            <input id="widget-url" class="form-control" placeholder="RUL"></input>
+            <input id="widget-url" class="form-control" placeholder="RUL"/>
         </div>
         <div class="form-group">
             <label for="widget-width">Width</label>
-            <input id="widget-width" class="form-control" placeholder="100%"></input>
+            <input id="widget-width" class="form-control" placeholder="100%"/>
         </div>
         <div class="form-group">
             <label>Upload</label>
@@ -50,7 +50,7 @@
                 <div  id="btnBrowse"  class="btn btn-default input-group-addon">
                     Select a file...
                 </div>
-                <span id="file-name" class="form-control"/>
+                <span id="file-name" class="form-control"></span>>
             </div>
 
         </div>

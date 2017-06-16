@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Choose Widget</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="css/style.css" rel="stylesheet"/>
-</head>
-<body>
-
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid row-fliud">
         <div class="navbar-text cl-icon-padding pull-left">
-            <a href="page-list.html" class="navbar-link cl-text-white">
+            <a href="/user/:uid/website/:wid/page" class="navbar-link cl-text-white">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <a class="cl-text-white navbar-brand cl-text-bold" href="page-list.html">
+        <a class="cl-text-white navbar-brand cl-text-bold" href="/user/:uid/website/:wid/page">
             Choose Widget
         </a>
     </div>
@@ -26,25 +15,21 @@
 <div class="container">
     <ul class="list-group cl-list-group-borderless">
         <li class="list-group-item cl-list-item-borderless">
-            <a href="widget-heading.html">Header</a>
+            <a href="#/widget-heading">Header</a>
         </li>
         <li class="list-group-item cl-list-item-borderless">
-            <a href="widget-image.html">Image</a>
+            <a href="#/widget-image">Image</a>
         </li>
         <li class="list-group-item cl-list-item-borderless">
-            <a href="widget-youtube.html">YouTube</a>
+            <a href="#/widget-youtube">YouTube</a>
         </li>
     </ul>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fuild">
-        <a href="profile.html" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+        <a href="/user/:uid" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
             <span class="glyphicon glyphicon-user"></span>
         </a>
     </div>
 </nav>
-
-
-</body>
-</html>
