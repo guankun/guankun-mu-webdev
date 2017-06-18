@@ -2,15 +2,15 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid row-fliud">
         <div class="navbar-text cl-icon-padding pull-left">
-            <a href="/user/:uid/website" class="navbar-link cl-text-white">
+            <a href="#/user/{{model.uid}}/website" class="navbar-link cl-text-white">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <a class="cl-text-white navbar-brand cl-text-bold" href="/user/:uid/website/:wid/page">
+        <a class="cl-text-white navbar-brand cl-text-bold" href="#/user/{{model.uid}}/website/{{model.wid}}/page">
             Pages
         </a>
         <div class="navbar-text pull-right">
-            <a href="/user/:uid/website/:wid/page/new" class="navbar-link cl-text-white cl-icon-padding">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/new" class="navbar-link cl-text-white cl-icon-padding">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
@@ -19,21 +19,9 @@
 
 <div class="container">
     <ul class="list-group cl-list-group-borderless">
-        <li class="list-group-item cl-list-item-borderless">
-            <a href="/user/:uid/website/:wid/page/:pid"><span class="glyphicon glyphicon-cog pull-right"></span></a>
-            <a href="/user/:uid/website/:wid/page/:pid/widget">Blogs</a>
-        </li>
-        <li class="list-group-item cl-list-item-borderless">
-            <a href="/user/:uid/website/:wid/page/:pid"><span class="glyphicon glyphicon-cog pull-right"></span></a>
-            <a href="/user/:uid/website/:wid/page/:pid/widget">My Page</a>
-        </li>
-        <li class="list-group-item cl-list-item-borderless">
-            <a href="/user/:uid/website/:wid/page/:pid"><span class="glyphicon glyphicon-cog pull-right"></span></a>
-            <a href="/user/:uid/website/:wid/page/:pid/widget">Contact Us</a>
-        </li>
-        <li class="list-group-item cl-list-item-borderless">
-            <a href="/user/:uid/website/:wid/page/:pid"><span class="glyphicon glyphicon-cog pull-right"></span></a>
-            <a href="/user/:uid/website/:wid/page/:pid/widget">About</a>
+        <li ng-repeat="page in model.pages" class="list-group-item cl-list-item-borderless">
+            <a href="#/user/{{model.uid}}/website/{{page.websiteId}}/page/{{page._id}}"><span class="glyphicon glyphicon-cog pull-right"></span></a>
+            <a href="#/user/{{model.uid}}/website/{{page.websiteId}}/page">{{page.name}}</a>
         </li>
     </ul>
 </div>
@@ -41,7 +29,7 @@
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fuild">
-        <a href="/user/:uid" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+        <a href="#/user/{{model.uid}}" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
             <span class="glyphicon glyphicon-user"></span>
         </a>
     </div>

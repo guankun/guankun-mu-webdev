@@ -8,7 +8,6 @@
     function LoginController($location, UserService) {
         var vm = this;
         vm.login = login;
-
         function login(username, password) {
             var user = UserService.findUserByCredentials(username, password);
             if (user === null) {
@@ -19,11 +18,11 @@
         }
     }
 
-    function RegisterController() {
+    function RegisterController($location, UserService) {
         var vm = this;
         vm.register = register;
 
-        function register($location, username, password, vpassword) {
+        function register(username, password, vpassword) {
             if (username === undefined || username === null || username === "" || password === undefined || password === "") {
                 vm.error = "Username and Passwords cannot be empty.";
                 return;
@@ -54,6 +53,7 @@
     function ProfileController($routeParams, $location, $timeout, UserService) {
         var vm = this;
         vm.user = UserService.findUserById($routeParams.uid);
+        vm.uid = $routeParams.uid;
         vm.username = vm.user.username;
         vm.firstName = vm.user.firstName;
         vm.lastName = vm.user.lastName;
@@ -63,6 +63,7 @@
         function updateUser() {
             var update_user = {
                 _id: $routeParams.uid,
+                username : vm.username,
                 firstName: vm.firstName,
                 lastName: vm.lastName,
                 email: vm.email

@@ -33,7 +33,7 @@
             return pages.reduce(getMaxId, 0).toString();
         }
 
-        function createPages(userId, page) {
+        function createPage(userId, websiteId, page) {
             var newPageId = getNextId();
             var newPage = {
                 _id: newPageId,
@@ -57,7 +57,7 @@
 
         function findPageById(pageId) {
             for (var w in pages) {
-                var page = page[w];
+                var page = pages[w];
                 if (parseInt(page._id) === parseInt(pageId)) {
                     return page;
                 }
@@ -72,7 +72,7 @@
             pages[index].description = page.description;
         }
 
-        function deleteWebsite(pageId) {
+        function deletePage(pageId) {
             var oldPage = findPageById(pageId);
             var index = pages.indexOf(oldPage);
             pages.splice(index, 1);

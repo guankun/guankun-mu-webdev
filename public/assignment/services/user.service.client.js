@@ -5,10 +5,10 @@
 
     function UserService() {
         var users = [
-            {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-            {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-            {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
+            {_id: "123", username: "alice",    password: "alice",  email: "alice@neu.edu.cn",  firstName: "Alice",  lastName: "Wonder"  },
+            {_id: "234", username: "bob",      password: "bob",    email: "bob@neu.edu.cn",  firstName: "Bob",    lastName: "Marley"  },
+            {_id: "345", username: "charly",   password: "charly",  email: "charly@neu.edu.cn", firstName: "Charly", lastName: "Garcia"  },
+            {_id: "456", username: "jannunzi", password: "jannunzi", email: "jannunzi@neu.edu.cn",firstName: "Jose",   lastName: "Annunzi" }
         ];
         var services = {
             "createUser": createUser,

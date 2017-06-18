@@ -11,11 +11,11 @@
         vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
     }
 
-    function NewWebsiteController($routeParams, WebsiteService) {
+    function NewWebsiteController($routeParams, $timeout, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.name = "WebsiteName";
-        vn.desc = "WebsiteDescription";
+        vm.desc = "WebsiteDescription";
         vm.newWebsite = newWebsite;
         function newWebsite(){
             var website = {
@@ -32,7 +32,7 @@
         }
     }
 
-    function EditWebsiteController($routeParams, WebsiteService) {
+    function EditWebsiteController($routeParams, $location, $timeout, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.website = WebsiteService.findWebsiteById($routeParams.wid);
@@ -60,6 +60,13 @@
 
         function deleteWebsite(){
             WebsiteService.deleteWebsite($routeParams.wid);
+            vm.deleted = "Website deleted!"
+
+            $location.url("/user/" + vm.uid + "/website");
+
+            $timeout(function () {
+                vm.deleted = null;
+            }, 3000);
         }
 
     }
