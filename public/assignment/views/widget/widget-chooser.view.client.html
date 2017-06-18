@@ -2,11 +2,11 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid row-fliud">
         <div class="navbar-text cl-icon-padding pull-left">
-            <a href="/user/:uid/website/:wid/page" class="navbar-link cl-text-white">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget" class="navbar-link cl-text-white">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <a class="cl-text-white navbar-brand cl-text-bold" href="/user/:uid/website/:wid/page">
+        <a class="cl-text-white navbar-brand cl-text-bold" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new">
             Choose Widget
         </a>
     </div>
@@ -15,20 +15,20 @@
 <div class="container">
     <ul class="list-group cl-list-group-borderless">
         <li class="list-group-item cl-list-item-borderless">
-            <a href="#/widget-heading">Header</a>
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/create/HEADING">Header</a>
         </li>
         <li class="list-group-item cl-list-item-borderless">
-            <a href="#/widget-image">Image</a>
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/create/IMAGE">Image</a>
         </li>
         <li class="list-group-item cl-list-item-borderless">
-            <a href="#/widget-youtube">YouTube</a>
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/create/YOUTUBE">YouTube</a>
         </li>
     </ul>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fuild">
-        <a href="/user/:uid" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+        <a href="#/user/:uid" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
             <span class="glyphicon glyphicon-user"></span>
         </a>
     </div>

@@ -1,0 +1,42 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+        <div class="navbar-text cl-icon-padding pull-left">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget" class="navbar-link cl-text-white">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+
+
+        <div class="pull-left">
+            <a class="cl-text-white navbar-brand cl-text-bold" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{model.wgid}}">
+                Widget Edit
+            </a>
+        </div>
+
+
+        <div class="navbar-text cl-icon-padding pull-right">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget" class="navbar-link cl-text-white cl-icon-padding" ng-click="model.newWidget()">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+    <form >
+        <div ng-switch="model.widgetType">
+            <div ng-switch-when="HEADING">
+                <ng-include src="'views/widget/widget-heading-edit.view.client.html'"/>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <ng-include src="'views/widget/widget-image-edit.view.client.html'"/>
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <ng-include src="'views/widget/widget-youtube-edit.view.client.html'"/>
+            </div>
+        </div>
+    </form>
+</div>

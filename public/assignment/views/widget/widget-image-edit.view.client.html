@@ -1,0 +1,29 @@
+
+<div class="form-group">
+    <label for="widget-url">URL</label>
+    <input id="widget-url" class="form-control" placeholder="{{model.widget.url}}" ng-model="model.url"/>
+</div>
+<div class="form-group">
+    <label for="widget-width">Width</label>
+    <input id="widget-width" class="form-control" placeholder="{{model.widget.width}}" ng-model="model.width"/>
+</div>
+<div class="form-group">
+    <label>Upload</label>
+    <input id="file-button" type="file" style="display: none;">
+    <div class="input-group">
+        <div  id="btnBrowse"  class="btn btn-default input-group-addon">
+            Select a file...
+        </div>
+        <span id="file-name" class="form-control"></span>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $('#file-button').change(function() {
+        $('#file-name').text($(this).val());
+    });
+
+    $('#btnBrowse').click(function(){
+        $('#file-button').click();
+    });
+</script>

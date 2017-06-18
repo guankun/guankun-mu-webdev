@@ -9,16 +9,14 @@
             { "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
             { "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%",
                 "url": "http://lorempixel.com/400/200/"},
-            { "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
             { "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
             { "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
-                "url": "https://youtu.be/AM2Ivdi9c4E" },
-            { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+                "url": "https://youtu.be/AM2Ivdi9c4E" }
         ];
 
         var services = {
             "createWidget" : createWidget,
-            "findWidgetByWebsiteId" : findWidgetByWebsiteId,
+            "findWidgetsByPageId" : findWidgetsByPageId,
             "findWidgetById" : findWidgetById,
             "updateWidget" : updateWidget,
             "deleteWidget" : deleteWidget
@@ -39,7 +37,7 @@
             return widgets.reduce(getMaxId, 0).toString();
         }
 
-        function createWidgets(userId, widget) {
+        function createWidget(widget) {
             var newWidgetId = getNextId();
             var newWidget = {};
             if(widget.widgetType == "HEADING"){
@@ -58,14 +56,6 @@
                     pageId: widget.pageId,
                     width: widget.width,
                     url : widget.url
-                }
-            }
-            else if(widget.widgetType == "HTML"){
-                newWidget = {
-                    _id: newWidgetId,
-                    widgetType: widget.widgetType,
-                    pageId: widget.pageId,
-                    text: widget.text
                 }
             }
             else if(widget.widgetType == "YOUTUBE"){
@@ -93,7 +83,7 @@
 
         function findWidgetById(widgetId) {
             for (w in widgets) {
-                var widget = widget[w];
+                var widget = widgets[w];
                 if (parseInt(widget._id) === parseInt(widgetId)) {
                     return widget;
                 }
@@ -104,16 +94,15 @@
         function updateWidget(widgetId, widget) {
             var oldWidget = findWidgetById(widgetId);
             var index = widgets.indexOf(oldWidget);
-            widgets[index].name = widget.name;
             widgets[index].widgetType = widget.widgetType;
             widgets[index].pageId = widget.pageId;
-            widgets[index].size = widget.size;
-            widgets[index].text = widget.text;
-            widgets[index].width = widget.width;
-            widgets[index].url = widget.url;
+            widgets[index].size = widget.size == null ? null : widget.size;
+            widgets[index].text = widget.text == null ? null : widget.text;
+            widgets[index].width = widget.width == null ? null : widget.width;
+            widgets[index].url = widget.url == null ? null : widget.url;
         }
 
-        function deleteWebsite(widgetId) {
+        function deleteWidget(widgetId) {
             var oldWidget = findWidgetById(widgetId);
             var index = widgets.indexOf(oldWidget);
             widgets.splice(index, 1);
