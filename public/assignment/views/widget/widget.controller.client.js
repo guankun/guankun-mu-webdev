@@ -1,15 +1,12 @@
 (function() {
     angular
         .module("WebAppMaker")
-        .controller("WidgetDisplayController", WidgetDisplayController)
         .controller("WidgetListController", WidgetListController)
         .controller("NewWidgetController", NewWidgetController)
         .controller("EditWidgetController", EditWidgetController)
         .controller("CreateWidgetController", CreateWidgetController)
         .filter('trusted', ['$sce', function ($sce) {
-            return function(url) {
-                return $sce.trustAsResourceUrl(url);
-            };
+            return $sce.trustAsResourceUrl;
         }]);
 
 
@@ -20,22 +17,6 @@
         vm.uid = $routeParams.uid;
         vm.pid = $routeParams.pid;
         vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
-    }
-
-    function WidgetDisplayController($scope, $routeParams, $sce, WidgtService){
-        var vm = this;
-        vm.wgid = $routeParams.wgid;
-        vm.widget = WidgetService.findWidgetById(vm.wgid);
-
-        if(widget.widgetType == "HEADING"){
-            vm.text = vm.widget.text;
-        }
-        else if(widget.widgetType == "IMAGE"){
-            vm.url = vm.widget.url;
-        }
-        else if(widget.widgetType == "YOUTUBE"){
-            vm.url = vm.widget.url;
-        }
     }
 
     function NewWidgetController($routeParams){
@@ -109,7 +90,7 @@
         function deleteWidget() {
             WidgetService.deleteWidget($routeParams.wgid);
 
-            vm.deleted = "Widget deleted!"
+            vm.deleted = "Widget deleted!";
 
             $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
 
