@@ -9,12 +9,14 @@
         var vm = this;
         vm.login = login;
         function login(username, password) {
-            var user = UserService.findUserByCredentials(username, password);
-            if (user === null) {
-                vm.error = "Username does not exist.";
-            } else {
-                $location.url("/user/" + user._id);
-            }
+            UserService.findUserByCredentials(username, password).then(
+                function successCallback(res) {
+                    $location.url("/user/" + res.data._id);
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
         }
     }
 
@@ -31,34 +33,56 @@
                 vm.error = "Password does not match.";
                 return;
             }
-            var user = UserService.findUserByUsername(username);
-            if (user === null) {
-                user = {
-                    username: username,
-                    password: password,
-                    firstName: "",
-                    lastName: "",
-                    email: ""
-                };
-                UserService.createUser(user);
-                user = UserService.findUserByUsername(username);
-                $location.url("/user/" + user._id);
-            }
-            else {
-                vm.error = "Username already exists.";
-            }
+            UserService.findUserByUsername(username).then(
+                function successCallback(response){
+                    vm.error = "Username already exists.";
+                },
+                function errorCallback(response) {
+                    user = {
+                        username: username,
+                        password: password,
+                        firstName: "",
+                        lastName: "",
+                        email: ""
+                    };
+                    UserService.createUser(user).then(
+                        function successCallback(res) {
+                            UserService.findUserByUsername(username).then(
+                                function success(res) {
+                                    user = res.data;
+                                    $location.url("/user/" + user._id);
+                                },
+                                function errorCallback(res) {
+                                    vm.error = "User created but cannot be found.";
+                                }
+                            );
+                        },
+                        function error(res) {
+                            vm.error = "Create user failed.";
+                        }
+                    );
+                }
+            );
         }
     }
 
     function ProfileController($routeParams, $location, $timeout, UserService) {
         var vm = this;
-        vm.user = UserService.findUserById($routeParams.uid);
-        vm.uid = $routeParams.uid;
-        vm.username = vm.user.username;
-        vm.firstName = vm.user.firstName;
-        vm.lastName = vm.user.lastName;
-        vm.email = vm.user.email;
-        vm.updateUser = updateUser;
+
+        UserService.findUserById($routeParams.uid).then(
+            function successCallback(res){
+                vm.user = res.data;
+                vm.uid = $routeParams.uid;
+                vm.username = vm.user.username;
+                vm.firstName = vm.user.firstName;
+                vm.lastName = vm.user.lastName;
+                vm.email = vm.user.email;
+                vm.updateUser = updateUser;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
 
         function updateUser() {
             var update_user = {
@@ -68,8 +92,14 @@
                 lastName: vm.lastName,
                 email: vm.email
             };
-            UserService.updateUser($routeParams.uid, update_user);
-            vm.updated = "Profile changes saved!";
+            UserService.updateUser($routeParams.uid, update_user).then(
+                function successCallback(res){
+                    vm.updated = "Profile changes saved!";
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
 
             $timeout(function () {
                 vm.updated = null;
