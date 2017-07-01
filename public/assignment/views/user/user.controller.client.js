@@ -7,6 +7,7 @@
 
     function LoginController($location, UserService) {
         var vm = this;
+        vm.error = null;
         vm.login = login;
         function login(username, password) {
             UserService.findUserByCredentials(username, password).then(
@@ -22,6 +23,7 @@
 
     function RegisterController($location, UserService) {
         var vm = this;
+        vm.error = null;
         vm.register = register;
 
         function register(username, password, vpassword) {
@@ -68,6 +70,8 @@
 
     function ProfileController($routeParams, $location, $timeout, UserService) {
         var vm = this;
+        vm.updated = null;
+        vm.error = null;
 
         UserService.findUserById($routeParams.uid).then(
             function successCallback(res){
