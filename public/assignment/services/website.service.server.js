@@ -35,7 +35,7 @@ module.exports = function(app) {
         if(newWebsite){
             res.status(200).send(newWebsite);
         } else {
-            res.sendStatus(500).send("Website creat failed.");
+            res.sendStatus(500).send("Website creation failed.");
         }
     }
 
@@ -50,11 +50,7 @@ module.exports = function(app) {
             }
         }
 
-        if(result.length > 0){
-            res.status(200).send(result);
-        } else{
-            res.status(404).send("No websites for this user.");
-        }
+        res.status(200).send(result);
     }
 
     function findWebsiteById(req, res){
@@ -67,7 +63,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        res.status(404).send("Website not found");
+        res.status(404).send("Website not found!");
     }
 
     function updateWebsite(req, res){
