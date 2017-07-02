@@ -31,8 +31,8 @@ module.exports = function(app){
             lastName: user.lastName
         };
 
-        users.push(newUser);
         if(newUser){
+            users.push(newUser);
             res.status(200).send(newUser);
         } else {
             res.sendStatus(500);

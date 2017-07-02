@@ -30,9 +30,9 @@ module.exports = function(app) {
             desc: website.desc,
             developerId: uid
         };
-        websites.push(newWebsite);
 
         if(newWebsite){
+            websites.push(newWebsite);
             res.status(200).send(newWebsite);
         } else {
             res.sendStatus(500).send("Website creation failed.");

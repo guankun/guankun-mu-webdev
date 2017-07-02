@@ -16,7 +16,17 @@
         vm.wid = $routeParams.wid;
         vm.uid = $routeParams.uid;
         vm.pid = $routeParams.pid;
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
+        vm.widgets = [];
+        vm.error = null;
+        WidgetService.findWidgetsByPageId(vm.pid).then(
+            function successCallback(res){
+                vm.widgets = res.data;
+            },
+            function errorCallback(res){
+                vm.widgets = [];
+                vm.error = res.data;
+            }
+        );
     }
 
     function NewWidgetController($routeParams){
@@ -33,6 +43,13 @@
         vm.pid = $routeParams.pid;
         vm.widgetType = $routeParams.wtype;
 
+        vm.size = null;
+        vm.text = null;
+        vm.width = null;
+        vm.url = null;
+
+        vm.error = null;
+
         vm.newWidget = newWidget;
         function newWidget(){
             var w = {
@@ -43,8 +60,14 @@
                 width: vm.width,
                 url: vm.url
             };
-            WidgetService.createWidget(w);
-            vm.created = "Widget created!";
+            WidgetService.createWidget(vm.pid, w).then(
+                function successCallback(res){
+                    vm.created = "Widget created!";
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
 
             $timeout(function () {
                 vm.created = null;
@@ -58,13 +81,38 @@
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
-        vm.widget = WidgetService.findWidgetById($routeParams.wgid);
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.wid);
-        vm.widgetType = vm.widget.widgetType;
-        vm.size = vm.widget.size == null ? null : vm.widget.size;
-        vm.text = vm.widget.text == null ? null : vm.widget.text;
-        vm.width = vm.widget.width == null ? null : vm.widget.width;
-        vm.url = vm.widget.url == null ? null : vm.widget.url;
+
+        vm.updated = null;
+        vm.deleted = null;
+        vm.error = null;
+
+        vm.widgetType = null;
+        vm.size = null;
+        vm.text = null;
+        vm.width = null;
+        vm.url = null;
+
+        WidgetService.findWidgetById($routeParams.wgid).then(
+            function successCallback(res){
+                vm.widget = res.data;
+                vm.widgetType = vm.widget.widgetType;
+                vm.size = vm.widget.size == null ? null : vm.widget.size;
+                vm.text = vm.widget.text == null ? null : vm.widget.text;
+                vm.width = vm.widget.width == null ? null : vm.widget.width;
+                vm.url = vm.widget.url == null ? null : vm.widget.url;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
+        vm.widgets = WidgetService.findWidgetsByPageId(vm.wid).then(
+            function successCallback(res){
+                vm.widgets = res.data;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
 
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
@@ -79,8 +127,14 @@
                 width: vm.widget.width == null ? null : vm.width,
                 url: vm.widget.url == null ? null : vm.url
             };
-            WidgetService.updateWidget($routeParams.wgid, w);
-            vm.updated = "Widget updated!";
+            WidgetService.updateWidget($routeParams.wgid, w).then(
+                function successCallback(res){
+                    vm.updated = "Widget updated!";
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
 
             $timeout(function () {
                 vm.updated = null;
@@ -88,11 +142,15 @@
         }
 
         function deleteWidget() {
-            WidgetService.deleteWidget($routeParams.wgid);
-
-            vm.deleted = "Widget deleted!";
-
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            WidgetService.deleteWidget($routeParams.wgid).then(
+                function successCallback(res){
+                    vm.deleted = "Widget deleted!";
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
 
             $timeout(function () {
                 vm.deleted = null;

@@ -8,7 +8,7 @@
 
         var services = {
             'createWebsite': createWebsite,
-            'findAllWebsitesForUser': findAllWebsitesForUser,
+            'findWebsitesByUser': findWebsitesByUser,
             'findWebsiteById': findWebsiteById,
             'updateWebsite': updateWebsite,
             'deleteWebsite': deleteWebsite
@@ -20,7 +20,7 @@
             return $http.post(url, website);
         }
 
-        function findAllWebsitesForUser(userId) {
+        function findWebsitesByUser(userId) {
             var url = "/api/user/" + userId + "/website";
             return $http.get(url);
         }
@@ -38,7 +38,7 @@
         function deleteWebsite(websiteId) {
             var url = "/api/website/" + websiteId;
             return $http.delete(url);
-        }   
+        }
 
     }
 })();

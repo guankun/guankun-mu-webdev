@@ -26,14 +26,14 @@ module.exports = function(app){
             _id: new Date().getTime(),
             name: page.name,
             description: page.description,
-            websiteId: websiteId
+            websiteId: wid
         };
-        pages.push(newPage);
 
         if(newPage){
+            pages.push(newPage);
             res.status(200).send(newPage);
         } else{
-            res.status(404).send("Page creation failed!");
+            res.status(500).send("Page creation failed!");
         }
     }
 
@@ -57,6 +57,7 @@ module.exports = function(app){
             var page = pages[p];
             if(parseInt(page._id) === parseInt(pid)){
                 res.status(200).send(page);
+                return;
             }
         }
         res.status(404).send("Page not found!");

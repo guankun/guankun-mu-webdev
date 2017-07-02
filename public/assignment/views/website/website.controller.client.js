@@ -12,7 +12,7 @@
         vm.websites = [];
         vm.error = null;
 
-        WebsiteService.findAllWebsitesForUser(vm.uid).then(
+        WebsiteService.findWebsitesByUser(vm.uid).then(
             function successCallback(res){
                 vm.websites = res.data;
             },
@@ -31,6 +31,17 @@
 
         vm.created = null;
         vm.error = null;
+
+        vm.websites = null;
+
+        WebsiteService.findWebsitesByUser(vm.uid).then(
+            function successCallback(res){
+                vm.websites = res.data;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
 
         vm.newWebsite = newWebsite;
 
@@ -57,15 +68,36 @@
     function EditWebsiteController($routeParams, $location, $timeout, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
-        vm.website = WebsiteService.findWebsiteById($routeParams.wid);
-        vm.websites = WebsiteService.findAllWebsitesForUser(vm.uid);
         vm.wid = $routeParams.wid;
-        vm.name = vm.website.name;
-        vm.desc = vm.website.desc;
 
         vm.updated = null;
         vm.deleted = null;
         vm.error = null;
+
+        vm.website = null;
+        vm.name = null;
+        vm.desc = null;
+        WebsiteService.findWebsiteById($routeParams.wid).then(
+            function successCallback(res){
+                vm.website = res.data;
+                vm.name = vm.website.name;
+                vm.desc = vm.website.desc;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
+        vm.websites = null;
+        WebsiteService.findWebsitesByUser(vm.uid).then(
+            function successCallback(res){
+                vm.websites = res.data;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
+
+
 
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;

@@ -38,7 +38,7 @@
                 websiteId : vm.wid,
                 description : vm.description
             }
-            PageService.createPage(vm.uid, vm.wid, page).then(
+            PageService.createPage(vm.wid, page).then(
                 function successCallback(res){
                     vm.created = "Page created!";
                 },
@@ -58,14 +58,35 @@
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
-        vm.page = PageService.findPageById($routeParams.pid);
-        vm.pages = PageService.findPageByWebsiteId(vm.wid);
-        vm.name = vm.page.name;
-        vm.desc = vm.page.description;
+        vm.name = null;
+        vm.desc = null;
 
         vm.updated = null;
         vm.deleted = null;
         vm.error = null;
+
+
+        vm.page = null;
+        vm.pages = null;
+
+        PageService.findPageById($routeParams.pid).then(
+            function successCallback(res){
+                vm.page = res.data;
+                vm.name = vm.page.name;
+                vm.desc = vm.page.description;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
+        PageService.findPageByWebsiteId(vm.wid).then(
+            function successCallback(res){
+                vm.pages = res.data;
+            },
+            function errorCallback(res){
+                vm.error = res.data;
+            }
+        );
 
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;

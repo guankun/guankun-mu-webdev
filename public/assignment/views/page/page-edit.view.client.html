@@ -3,7 +3,7 @@
     <div class="container-fluid row-fluid">
 
         <div class="navbar-text cl-icon-padding pull-left">
-            <a href="#/user/{{model.uid}}/website" class="navbar-link cl-text-white">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page" class="navbar-link cl-text-white">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
@@ -35,7 +35,7 @@
         <ul class="list-group cl-list-group-borderless">
             <li ng-repeat="page in model.pages" class="list-group-item cl-list-item-borderless">
                 <a href="#/user/{{model.uid}}/website/{{page.websiteId}}/page/{{page._id}}"><span class="glyphicon glyphicon-cog pull-right"></span></a>
-                <a href="#/user/{{model.uid}}/website/{{page.websiteId}}/page">{{page.name}}</a>
+                <a href="#/user/{{model.uid}}/website/{{page.websiteId}}/page/{{page._id}}">{{page.name}}</a>
             </li>
         </ul>
     </div>
