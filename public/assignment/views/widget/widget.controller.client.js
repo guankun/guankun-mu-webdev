@@ -92,6 +92,9 @@
         vm.width = null;
         vm.url = null;
 
+        vm.widget = null;
+        vm.widgets = null;
+
         WidgetService.findWidgetById($routeParams.wgid).then(
             function successCallback(res){
                 vm.widget = res.data;
@@ -105,7 +108,7 @@
                 vm.error = res.data;
             }
         );
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.wid).then(
+        WidgetService.findWidgetsByPageId(vm.wid).then(
             function successCallback(res){
                 vm.widgets = res.data;
             },

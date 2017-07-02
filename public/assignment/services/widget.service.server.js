@@ -9,8 +9,29 @@ module.exports = function(app){
             "url": "https://www.youtube.com/embed/AM2Ivdi9c4E" }
     ];
 
+    var multer = require('multer'); // npm install multer --save
+    var upload = multer({ dest: __dirname+'/../../uploads' });
+/*    var storage = multer.diskStorage({
+        destination: function(req, file, callback) {
+            callback(null, '/../../uploads')
+        },
+        filename: function(req, file, callback) {
+            console.log(file);
+            callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+        }
+    });
+*/
     // POST Calls.
     app.post('/api/page/:pageId/widget', createWidget);
+    app.post('/api/upload', function(req, res) {
+        var upload = multer({
+            storage: storage
+        }).single('userFile');
+        upload(req, res, function(err) {
+            res.end('File is uploaded')
+        });
+    });
+    //app.post ('/api/upload', upload.single('myFile'), uploadImage);
 
     // GET Calls.
     app.get('/api/page/:pageId/widget', findAllWidgetsForPage);
@@ -124,4 +145,34 @@ module.exports = function(app){
         }
         res.status(404).send("Widget not found!");
     }
+
+    function uploadImage(req, res) {
+        console.log(widgets);
+        var widgetId      = req.body.widgetId;
+        var width         = req.body.width;
+        var myFile        = req.file;
+
+        var userId = req.body.userId;
+        var websiteId = req.body.websiteId;
+        var pageId = req.body.pageId;
+
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        console.log(filename);
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        for(var i = 0; i < widgets.length; i++){
+            if (parseInt(widgets[i]._id) === parseInt(widgetId)) {
+                widgets[i].url = '/uploads/'+filename;
+                //var callbackUrl   = "#/user/"+userId+"/website/"+websiteId+"/page/";
+                //res.redirect(callbackUrl);
+                return;
+            }
+        }
+
+    }
+
 }
