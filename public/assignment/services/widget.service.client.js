@@ -58,7 +58,7 @@
                 uploadEventHandlers: { progress: function(e) {
                     defer.notify(e.loaded * 100 / e.total);
                 }}
-            });
+            }).success(defer.resolve.bind(defer)).error(defer.reject.bind(defer));;
             return defer.promise;
         }
 
