@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory('WidgetService', WidgetService);
 
-    function WidgetService($http){
+    function WidgetService($http, $q){
 
         var services = {
             "createWidget" : createWidget,
@@ -51,10 +51,15 @@
             fd.append("pageId", pageId);
             fd.append("widgetId", widgetId);
 
-            return $http.post(url, fd, {
+            var defer = $q.defer();
+            $http.post(url, fd, {
                 transformRequest: angular.identity,
-                headers: {'Content-Type': undefined}
+                headers: {'Content-Type': undefined},
+                uploadEventHandlers: { progress: function(e) {
+                    defer.notify(e.loaded * 100 / e.total);
+                }}
             });
+            return defer.promise;
         }
 
     }

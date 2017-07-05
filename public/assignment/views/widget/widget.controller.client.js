@@ -205,8 +205,9 @@
                     vm.uploading = null;
                     vm.error = res.data;
                 },
-                function progressCallback(res){
-                    vm.uploading = "Image uploading.....";
+                function progressCallback(progress){
+                    vm.uploaded = null;
+                    vm.uploading = "Image uploading....." + Math.floor(progress) + '%';
                 }
             );
         }
