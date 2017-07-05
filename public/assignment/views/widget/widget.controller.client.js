@@ -49,6 +49,8 @@
         vm.url = null;
 
         vm.error = null;
+        vm.uploaded = null;
+        vm.uploading = null;
 
         vm.newWidget = newWidget;
         vm.uploadFile = uploadFile;
@@ -83,10 +85,16 @@
 
             WidgetService.upload(file, vm.uid, vm.wid, vm.pid, -1).then(
                 function successCallback(res){
+                    vm.uploading = null;
+                    vm.uploaded = "Upload Success!";
                     vm.url = res.data;
                 },
                 function errorCallback(res){
+                    vm.uploading = null;
                     vm.error = res.data;
+                },
+                function progressCallback(res){
+                    vm.uploading = "Image uploading.....";
                 }
             );
         }
@@ -103,6 +111,7 @@
         vm.deleted = null;
         vm.error = null;
         vm.uploaded = null;
+        vm.uploading = null;
 
         vm.widgetType = null;
         vm.size = null;
@@ -187,12 +196,17 @@
 
             WidgetService.upload(file, vm.uid, vm.wid, vm.pid, vm.wgid).then(
                 function successCallback(res){
+                    vm.uploading = null;
                     vm.widget.url = res.data;
                     vm.url = res.data;
                     vm.uploaded = "Upload Success!";
                 },
                 function errorCallback(res){
+                    vm.uploading = null;
                     vm.error = res.data;
+                },
+                function progressCallback(res){
+                    vm.uploading = "Image uploading.....";
                 }
             );
         }
