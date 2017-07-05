@@ -87,11 +87,11 @@
                 function successCallback(res){
                     vm.uploading = null;
                     vm.uploaded = "Upload Success!";
-                    vm.url = res.data;
+                    vm.url = res;
                 },
                 function errorCallback(res){
                     vm.uploading = null;
-                    vm.error = res.data;
+                    vm.error = res;
                 },
                 function progressCallback(progress){
                     vm.uploading = "Image uploading....." + Math.floor(progress) + '%';
@@ -197,13 +197,13 @@
             WidgetService.upload(file, vm.uid, vm.wid, vm.pid, vm.wgid).then(
                 function successCallback(res){
                     vm.uploading = null;
-                    vm.widget.url = res.data;
-                    vm.url = res.data;
+                    vm.widget.url = res;
+                    vm.url = res;
                     vm.uploaded = "Upload Success!";
                 },
                 function errorCallback(res){
                     vm.uploading = null;
-                    vm.error = res.data;
+                    vm.error = res;
                 },
                 function progressCallback(progress){
                     vm.uploaded = null;

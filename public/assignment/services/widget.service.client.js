@@ -58,8 +58,14 @@
                 uploadEventHandlers: { progress: function(e) {
                     defer.notify(e.loaded * 100 / e.total);
                 }}
-            }).success(defer.resolve.bind(defer)).error(defer.reject.bind(defer));;
-            return defer.promise;
+            }).success(defer.resolve.bind(defer)).error(defer.reject.bind(defer));
+/*            .success(function(data){
+                defer.resolve(data);
+            }.bind(defer))
+            .error(function(err) {
+                defer.reject(err);
+            }.bind(defer));
+  */          return defer.promise;
         }
 
     }
