@@ -51,6 +51,7 @@
         vm.error = null;
 
         vm.newWidget = newWidget;
+        vm.uploadFile = uploadFile;
         function newWidget(){
             var w = {
                 widgetType: vm.widgetType,
@@ -73,6 +74,22 @@
                 vm.created = null;
             }, 3000);
         }
+
+        function uploadFile(myFile){
+            var file = myFile;
+            var uploadUrl = "/api/upload";
+            var fd = new FormData();
+            fd.append('file', file);
+
+            WidgetService.upload(file, vm.uid, vm.wid, vm.pid, -1).then(
+                function successCallback(res){
+                    vm.url = res.data;
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
+        }
     }
 
     function EditWidgetController($routeParams, $location, $timeout, WidgetService) {
@@ -85,6 +102,7 @@
         vm.updated = null;
         vm.deleted = null;
         vm.error = null;
+        vm.uploaded = null;
 
         vm.widgetType = null;
         vm.size = null;
@@ -119,6 +137,7 @@
 
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
+        vm.uploadFile = uploadFile;
 
         function updateWidget() {
             var w = {
@@ -159,7 +178,24 @@
                 vm.deleted = null;
             }, 3000);
         }
-    }
 
+        function uploadFile(myFile){
+            var file = myFile;
+            var uploadUrl = "/api/upload";
+            var fd = new FormData();
+            fd.append('file', file);
+
+            WidgetService.upload(file, vm.uid, vm.wid, vm.pid, vm.wgid).then(
+                function successCallback(res){
+                    vm.widget.url = res.data;
+                    vm.url = res.data;
+                    vm.uploaded = "Upload Success!";
+                },
+                function errorCallback(res){
+                    vm.error = res.data;
+                }
+            );
+        }
+    }
 
 })();

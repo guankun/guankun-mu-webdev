@@ -60,3 +60,4 @@ typings/
 # WebStorm
 .idea
 
+public/uploads*

@@ -26,6 +26,10 @@
 </nav>
 
 <div class="container">
+    <div ng-show="model.updated" class="alert alert-success" role="alert">{{model.updated}}</div>
+    <div ng-show="model.uploaded" class="alert alert-success" role="alert">{{model.uploaded}}</div>
+    <div ng-show="model.deleted" class="alert alert-success" role="alert">{{model.deleted}}</div>
+    <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
     <form >
         <div ng-switch="model.widget.widgetType">
             <div ng-switch-when="HEADING">

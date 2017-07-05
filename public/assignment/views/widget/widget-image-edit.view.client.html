@@ -7,13 +7,8 @@
     <label for="widget-width">Width</label>
     <input id="widget-width" class="form-control" placeholder="{{model.widget.width}}" ng-model="model.width"/>
 </div>
-    <form action="/api/upload"   method="post" enctype="multipart/form-data">
-        <input  name="myFile"    type="file" class="form-control"/>
-        <input  name="width"     value="{{model.widget.width}}" style="display: none"/>
-        <input  name="userId"    value="{{model.uid}}"   style="display: none"/>
-        <input  name="websiteId" value="{{model.wid}}"   style="display: none"/>
-        <input  name="pageId"    value="{{model.pid}}"   style="display: none"/>
-        <input  name="widgetId"  value="{{model.wgid}}"   style="display: none"/>
 
-        <button type="submit"    class="btn btn-block btn-primary">Upload Image</button>
-    </form>
+<div >
+    <input type="file" file-model="myFile"/>
+    <button ng-click="model.uploadFile(myFile)" class="btn btn-block btn-primary">Upload Image</button>
+</div>

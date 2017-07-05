@@ -10,7 +10,8 @@
             "findWidgetsByPageId" : findWidgetsByPageId,
             "findWidgetById" : findWidgetById,
             "updateWidget" : updateWidget,
-            "deleteWidget" : deleteWidget
+            "deleteWidget" : deleteWidget,
+            "upload": upload
         };
 
         return services;
@@ -39,6 +40,21 @@
         function deleteWidget(widgetId) {
             var url = "/api/widget/" + widgetId;
             return $http.delete(url);
+        }
+
+        function upload(file, userId, websiteId, pageId, widgetId){
+            var url = "/api/upload";
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.append('userId', userId);
+            fd.append("websiteId", websiteId);
+            fd.append("pageId", pageId);
+            fd.append("widgetId", widgetId);
+
+            return $http.post(url, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            });
         }
 
     }

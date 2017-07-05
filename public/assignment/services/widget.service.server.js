@@ -23,7 +23,7 @@ module.exports = function(app){
 */
     // POST Calls.
     app.post('/api/page/:pageId/widget', createWidget);
-    app.post('/api/upload', function(req, res) {
+/*    app.post('/api/upload', function(req, res) {
         var upload = multer({
             storage: storage
         }).single('userFile');
@@ -31,7 +31,7 @@ module.exports = function(app){
             res.end('File is uploaded')
         });
     });
-    //app.post ('/api/upload', upload.single('myFile'), uploadImage);
+*/    app.post('/api/upload', upload.single('file'), uploadImage);
 
     // GET Calls.
     app.get('/api/page/:pageId/widget', findAllWidgetsForPage);
@@ -146,33 +146,35 @@ module.exports = function(app){
         res.status(404).send("Widget not found!");
     }
 
-    function uploadImage(req, res) {
-        console.log(widgets);
-        var widgetId      = req.body.widgetId;
-        var width         = req.body.width;
-        var myFile        = req.file;
-
-        var userId = req.body.userId;
-        var websiteId = req.body.websiteId;
-        var pageId = req.body.pageId;
+    function uploadImage(req, res){
+        var userId      = req.body.userId;
+        var websiteId   = req.body.websiteId;
+        var pageId      = req.body.pageId;
+        var widgetId    = req.body.widgetId;
+        var myFile      = req.file;
 
         var originalname  = myFile.originalname; // file name on user's computer
         var filename      = myFile.filename;     // new file name in upload folder
-        console.log(filename);
         var path          = myFile.path;         // full path of uploaded file
         var destination   = myFile.destination;  // folder where file is saved to
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        for(var i = 0; i < widgets.length; i++){
-            if (parseInt(widgets[i]._id) === parseInt(widgetId)) {
-                widgets[i].url = '/uploads/'+filename;
-                //var callbackUrl   = "#/user/"+userId+"/website/"+websiteId+"/page/";
-                //res.redirect(callbackUrl);
-                return;
+        if(widgetId == -1){ // create new widget
+            var newUrl = '/uploads/'+filename;
+            res.status(200).send(newUrl);
+            return;
+        } else{
+            for(var i = 0; i < widgets.length; i++){
+                if (parseInt(widgets[i]._id) === parseInt(widgetId)) {
+                    var newUrl = '/uploads/'+filename;
+                    widgets[i].url = newUrl;
+                    res.status(200).send(newUrl);
+                    return;
+                }
             }
+            res.status(404).send("Error! Cannot find widget.");
         }
-
     }
 
 }
