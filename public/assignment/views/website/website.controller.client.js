@@ -23,7 +23,7 @@
         );
     }
 
-    function NewWebsiteController($routeParams, $timeout, WebsiteService) {
+    function NewWebsiteController($routeParams, $timeout, $location, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.name = "WebsiteName";
@@ -46,6 +46,10 @@
         vm.newWebsite = newWebsite;
 
         function newWebsite(){
+            if(!vm.name){
+                vm.error = "Name cannot be empty!";
+                return;
+            }
             var website = {
                 _user : $routeParams.uid,
                 name: vm.name,
@@ -54,6 +58,7 @@
             WebsiteService.createWebsite(vm.uid, website).then(
                 function successCallback(res){
                     vm.created = "Website created!";
+                    $location.url("/user/" + vm.uid + "/website");
                 },
                 function errorCallback(res){
                     vm.error = res.data;
@@ -101,12 +106,17 @@
         vm.deleteWebsite = deleteWebsite;
 
         function updateWebsite(){
+            if(!vm.name) {
+                vm.error = "Name cannot be empty!";
+                return;
+            }
             var updated_website = vm.website;
             updated_website.name = vm.name;
             updated_website.description = vm.desc;
             WebsiteService.updateWebsite($routeParams.wid, updated_website).then(
                 function successCallback(res){
                     vm.updated = "Website updated!";
+                    $location.url("/user/" + vm.uid + "/website");
                 },
                 function errorCallback(){
                     vm.updated = null;

@@ -21,7 +21,7 @@
         );
     }
 
-    function NewPageController($routeParams, $timeout, PageService) {
+    function NewPageController($routeParams, $timeout, $location, PageService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
@@ -33,6 +33,10 @@
 
         vm.newPage = newPage;
         function newPage(){
+            if(!vm.name){
+                vm.error = "Name cannot be empty!";
+                return;
+            }
             var page = {
                 name: vm.name,
                 websiteId : vm.wid,
@@ -40,6 +44,7 @@
             }
             PageService.createPage(vm.wid, page).then(
                 function successCallback(res){
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
                     vm.created = "Page created!";
                 },
                 function errorCallback(res){
@@ -53,7 +58,7 @@
         }
     }
 
-    function EditPageController($routeParams, $location, $timeout, PageService) {
+    function EditPageController($routeParams, $location, $timeout, $location, PageService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
@@ -92,11 +97,17 @@
         vm.deletePage = deletePage;
 
         function updatePage() {
+            if(!vm.name){
+                vm.error = "Name cannot be empty!";
+                return;
+            }
+
             var updatedPage = vm.page;
             updatedPage.name = vm.name;
             updatedPage.description = vm.desc;
             PageService.updatePage($routeParams.pid, updatedPage).then(
                 function successCallback(res){
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
                     vm.updated = "Page updated!";
                 },
                 function errorCallback(res){

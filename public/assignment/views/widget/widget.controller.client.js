@@ -36,7 +36,7 @@
         vm.pid = $routeParams.pid;
     }
 
-    function CreateWidgetController($routeParams, $timeout, WidgetService) {
+    function CreateWidgetController($routeParams, $timeout, $location, WidgetService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
@@ -56,6 +56,10 @@
         vm.newWidget = newWidget;
         vm.uploadFile = uploadFile;
         function newWidget(){
+            if(!vm.name){
+                vm.error = "Name cannot be empty!";
+                return;
+            }
             var w = {
                 _page: vm.pid,
                 type: vm.widgetType,
@@ -73,6 +77,7 @@
             };
             WidgetService.createWidget(vm.pid, w).then(
                 function successCallback(res){
+                    $location.url("/user/" + vm.uid + "/website/"+vm.wid +"/page/" + vm.pid + "/widget")
                     vm.created = "Widget created!";
                 },
                 function errorCallback(res){
@@ -121,6 +126,7 @@
         vm.uploaded = null;
         vm.uploading = null;
 
+        vm.name = null;
         vm.widgetType = null;
         vm.width = null;
         vm.size = null;
@@ -159,6 +165,10 @@
         vm.uploadFile = uploadFile;
 
         function updateWidget() {
+            if(!vm.name){
+                vm.error = "Name cannot be empty!";
+                return;
+            }
             var updatedWidget = vm.widget;
             updatedWidget.text = vm.text;
             updatedWidget.size = vm.size;
@@ -167,6 +177,7 @@
 
             WidgetService.updateWidget($routeParams.wgid, updatedWidget).then(
                 function successCallback(res){
+                    $location.url("/user/" + vm.uid + "/website/"+vm.wid +"/page/" + vm.pid + "/widget")
                     vm.updated = "Widget updated!";
                 },
                 function errorCallback(res){

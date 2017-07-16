@@ -22,7 +22,7 @@
 
 
         <div class="navbar-text cl-icon-padding pull-right">
-            <a href="#/user/{{model.uid}}/website" class="navbar-link cl-text-white cl-icon-padding" ng-click="model.newWebsite()">
+            <a class="navbar-link cl-text-white cl-icon-padding" ng-click="model.newWebsite()">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
         </div>
@@ -41,7 +41,7 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
         <div ng-show="model.created" class="alert alert-success" role="alert">{{model.created}}</div>
-        <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.created}}</div>
+        <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
         <form>
             <div class="form-group">
                 <label for="website-name">Name</label>
