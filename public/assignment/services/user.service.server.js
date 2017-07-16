@@ -1,4 +1,4 @@
-module.exports = function(app){
+module.exports = function(app, models){
     var users = [
         {_id: "123", username: "alice",    password: "alice",  email: "alice@neu.edu.cn",  firstName: "Alice",  lastName: "Wonder"  },
         {_id: "234", username: "bob",      password: "bob",    email: "bob@neu.edu.cn",  firstName: "Bob",    lastName: "Marley"  },
@@ -22,33 +22,30 @@ module.exports = function(app){
 
     function createUser(req,res){
         var user = req.body;
-        var newUser = {
-            _id: new Date().getTime(),
-            username: user.username,
-            password: user.password,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName
-        };
-
-        if(newUser){
-            users.push(newUser);
-            res.status(200).send(newUser);
-        } else {
-            res.sendStatus(500);
-        }
+        models.userModel.createUser(user).then(
+            function successCallback(newUser){
+                res.status(200).send(newUser);
+            },
+            function errorCallback(error){
+                res.status(500).send("User careation failed. " + error);
+            }
+        );
     }
 
     function findUserById(req, res) {
         var uid = req.params.uid;
-        for (var u in users){
-            var user = users[u];
-            if(parseInt(user._id) === parseInt(uid)){
-                res.status(200).send(user);
-                return;
+        models.userModel.findUserById(uid).then(
+            function successCallback(user){
+                if(user){
+                    res.status(200).json(user);
+                }else{
+                    res.status(404).send("User not found by id!");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-        res.status(404).send("User not found!");
+        );
     }
 
     function findUserByUsernameOrCredentials(req, res){
@@ -62,58 +59,73 @@ module.exports = function(app){
 
     function findUserByUsername(req, res) {
         var username = req.query.username;
-        for (var u in users){
-            var user = users[u];
-            if(user.username === username){
-                res.status(200).send(user);
-                return;
+        models.userModel.findUserByUsername(username).then(
+            function successCallback(user){
+                if(user){
+                    res.status(200).json(user);
+                } else{
+                    res.status(404).send("User not found by username.");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-        res.status(404).send("User not found!");
+        );
     }
 
     function findUserByCredentials(req, res) {
         var username = req.query.username;
         var password = req.query.password;
-        for (var u in users){
-            var user = users[u];
-            if((user.username === username) && (user.password === password)){
-                res.status(200).send(user);
-                return;
+        models.userModel.findUserByCredentials(username, password).then(
+            function successCallback(user){
+                if(user){
+                    res.status(200).json(user);
+                } else{
+                    res.status(404).send("Wrong username or password!");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-        res.status(404).send("Wrong username or password!");
+        );
     }
 
     function updateUser(req, res){
         var uid = req.params.uid;
         var newUser = req.body;
 
-        for (u in users){
-            var user = users[u];
-            if(parseInt(user._id) === parseInt(uid)){
-                user.email = newUser.email;
-                user.firstName = newUser.firstName;
-                user.lastName = newUser.lastName;
-                res.status(200).send(user);
-                return;
+        models.userModel.updateUser(uid, newUser).then(
+            function successCallback(user){
+                if(user){
+                    res.status(200).json(user);
+                } else{
+                    res.status(404).send("User not found when update.");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-        res.status(404).send("User not found and update failed!");
+        );
     }
 
     function deleteUser(req,res) {
         var uid = req.params.id;
-
-        for (u in users){
-            var user = users[u];
-            if(parseInt(user._id) === parseInt(uid)){
-                users.splice(u,1);
-                res.sendStatus(200);
-                return;
-            }
+        if(uid){
+            model
+                .userModel
+                .deleteUser(uid)
+                .then(
+                    function (status){
+                        res.status(200);
+                    },
+                    function (error){
+                        res.status(400).send(error);
+                    }
+                );
+        } else{
+            // Precondition Failed. Precondition is that the user exists.
+            res.status(412);
         }
-        res.status(404).send("not found!");
     }
 }
 

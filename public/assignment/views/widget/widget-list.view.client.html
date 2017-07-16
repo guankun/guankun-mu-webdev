@@ -27,7 +27,7 @@
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
         </div>
-        <ul ng-switch="widget.widgetType" id="sortable">
+        <ul ng-switch="widget.type" id="sortable">
             <li ng-switch-when="HEADING">
                 <ng-include src="'views/widget/widget-heading.view.client.html'"/>
             </li>

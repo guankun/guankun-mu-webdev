@@ -45,7 +45,8 @@
                         password: password,
                         firstName: "",
                         lastName: "",
-                        email: ""
+                        email: "",
+                        phone: ""
                     };
                     UserService.createUser(user).then(
                         function successCallback(res) {
@@ -77,10 +78,13 @@
             function successCallback(res){
                 vm.user = res.data;
                 vm.uid = $routeParams.uid;
+                vm.password = vm.user.password;
                 vm.username = vm.user.username;
                 vm.firstName = vm.user.firstName;
                 vm.lastName = vm.user.lastName;
                 vm.email = vm.user.email;
+                vm.phone = vm.user.phone;
+                vm.websites = vm.user.websites;
                 vm.updateUser = updateUser;
             },
             function errorCallback(res){
@@ -89,13 +93,11 @@
         );
 
         function updateUser() {
-            var update_user = {
-                _id: $routeParams.uid,
-                username : vm.username,
-                firstName: vm.firstName,
-                lastName: vm.lastName,
-                email: vm.email
-            };
+            var update_user = vm.user;
+            update_user.username = vm.username;
+            update_user.email = vm.email;
+            update_user.firstName = vm.firstName;
+            update_user.lastName = vm.lastName;
             UserService.updateUser($routeParams.uid, update_user).then(
                 function successCallback(res){
                     vm.updated = "Profile changes saved!";

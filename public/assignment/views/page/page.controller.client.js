@@ -26,7 +26,7 @@
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.name = "PageName";
-        vm.description = "WebsiteDescription";
+        vm.desc = "WebsiteDescription";
 
         vm.created = null;
         vm.error = null;
@@ -36,7 +36,7 @@
             var page = {
                 name: vm.name,
                 websiteId : vm.wid,
-                description : vm.description
+                description : vm.desc
             }
             PageService.createPage(vm.wid, page).then(
                 function successCallback(res){
@@ -92,12 +92,10 @@
         vm.deletePage = deletePage;
 
         function updatePage() {
-            var page = {
-                name: vm.name,
-                websiteId : vm.wid,
-                description : vm.description
-            }
-            PageService.updatePage($routeParams.pid, page).then(
+            var updatedPage = vm.page;
+            updatedPage.name = vm.name;
+            updatedPage.description = vm.desc;
+            PageService.updatePage($routeParams.pid, updatedPage).then(
                 function successCallback(res){
                     vm.updated = "Page updated!";
                 },

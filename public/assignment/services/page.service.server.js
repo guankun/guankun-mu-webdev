@@ -1,9 +1,9 @@
-module.exports = function(app){
-    var pages = [
+module.exports = function(app, models){
+    /*var pages = [
         { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
         { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
         { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
-    ];
+    ];*/
 
     // POST Calls.
     app.post('/api/website/:websiteId/page', createPage);
@@ -23,76 +23,100 @@ module.exports = function(app){
         var page = req.body;
 
         var newPage = {
-            _id: new Date().getTime(),
+            _website: wid,
             name: page.name,
-            description: page.description,
-            websiteId: wid
+            title: page.title,
+            description: page.description
         };
-
-        if(newPage){
-            pages.push(newPage);
-            res.status(200).send(newPage);
-        } else{
-            res.status(500).send("Page creation failed!");
-        }
+        models.pageModel.createPage(wid, newPage).then(
+            function successCallback(newPage){
+                models.websiteModel.addPageToWebsite(newPage._website, newPage._id);
+                res.status(200).send(newPage);
+            },
+            function errorCallback(error){
+                res.status(500).send("Page careation failed. " + error);
+            }
+        );
     }
 
     function findAllPagesForWebsite(req, res){
         var wid = req.params.websiteId;
-        var result = [];
 
-        for(var p in pages){
-            var page = pages[p];
-            if(parseInt(page.websiteId) === parseInt(wid)){
-                result.push(page);
+        models.pageModel.findAllPagesForWebsite(wid).then(
+            function successCallback(pages){
+                res.status(200).send(pages);
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-
-        res.status(200).send(result);
+        );
     }
 
     function findPageById(req, res){
         var pid = req.params.pageId;
-        for(var p in pages){
-            var page = pages[p];
-            if(parseInt(page._id) === parseInt(pid)){
-                res.status(200).send(page);
-                return;
+        models.pageModel.findPageById(pid).then(
+            function successCallback(page){
+                if(page){
+                    res.status(200).json(page);
+                }else{
+                    res.status(404).send("Page not found by id!");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-        res.status(404).send("Page not found!");
+        );
     }
 
     function updatePage(req, res){
         var pid = req.params.pageId;
-        var oldPage = null;
-        for(var p in pages){
-            var page = pages[p];
-            if(parseInt(page._id) === parseInt(pid)){
-                oldPage = pages[p];
-            }
-        }
-        if(oldPage){
-            var index = pages.indexOf(oldPage);
-            pages[index].name = page.name;
-            pages[index].description = page.description;
-            res.status(200).send(pages[index]);
-        } else{
-            res.status(404).send("Page not found!");
-        }
+        var newPage = req.body;
 
+        models.pageModel.updatePage(pid, newPage).then(
+            function successCallback(page){
+                if(page){
+                    res.status(200).json(page);
+                } else{
+                    res.status(404).send("Page not found when update.");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
+            }
+        );
     }
 
     function deletePage(req, res){
         var pid = req.params.pageId;
-        for(var i = 0; i < pages.length; i++){
-            var page = pages[i];
-            if (parseInt(page._id) === parseInt(pid)) {
-                pages.splice(i, 1);
-                res.status(200);
-                return;
+        var wid = null;
+
+        models.pageModel.findPageById(pid).then(
+            function successCallback(page){
+                if(page){
+                    wid = page._website;
+                    if(wid){
+                        models.websiteModel.removePageFromWebsite(wid, pid);
+                    }
+                    if(pid){
+                        models.pageModel.deletePage(pid).then(
+                            function (status){
+                                res.status(200);
+                            },
+                            function (error){
+                                res.status(400).send(error);
+                            }
+                        );
+                    } else{
+                        // Precondition Failed. Precondition is that the user exists.
+                        res.status(412);
+                    }
+                } else{
+                    res.status(404).send("Page not found when delete.");
+                }
+            },
+            function errorCallback(error){
+                res.status(400).send(error);
             }
-        }
-        res.status(404).send("Page not found!");
+        );
     }
 }

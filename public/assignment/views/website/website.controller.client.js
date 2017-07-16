@@ -47,9 +47,9 @@
 
         function newWebsite(){
             var website = {
+                _user : $routeParams.uid,
                 name: vm.name,
-                developerId : $routeParams.uid,
-                desc : vm.desc
+                description : vm.desc
             }
             WebsiteService.createWebsite(vm.uid, website).then(
                 function successCallback(res){
@@ -81,7 +81,7 @@
             function successCallback(res){
                 vm.website = res.data;
                 vm.name = vm.website.name;
-                vm.desc = vm.website.desc;
+                vm.desc = vm.website.description;
             },
             function errorCallback(res){
                 vm.error = res.data;
@@ -97,18 +97,13 @@
             }
         );
 
-
-
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 
         function updateWebsite(){
-            var updated_website = {
-                _id : $routeParams.wid,
-                name : vm.name,
-                developerId : $routeParams.uid,
-                desc : vm.desc
-            }
+            var updated_website = vm.website;
+            updated_website.name = vm.name;
+            updated_website.description = vm.desc;
             WebsiteService.updateWebsite($routeParams.wid, updated_website).then(
                 function successCallback(res){
                     vm.updated = "Website updated!";
