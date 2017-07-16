@@ -2,7 +2,7 @@ module.exports = function(app) {
     var mongoose = require('mongoose');
     var uristring =
         process.env.MONGOLAB_URI ||
-        process.env.MONGOHQ_URL ||
+        process.env.MONGODB_URI ||
         'mongodb://localhost/CS5610';
 
     var conn = mongoose.createConnection(uristring, function (err, res) {
