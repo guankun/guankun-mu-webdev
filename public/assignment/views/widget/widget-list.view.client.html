@@ -27,17 +27,17 @@
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
         </div>
-        <ul ng-switch="widget.type" id="sortable">
-            <li ng-switch-when="HEADING">
+        <div ng-switch="widget.type" id="sortable">
+            <div ng-switch-when="HEADING">
                 <ng-include src="'views/widget/widget-heading.view.client.html'"/>
-            </li>
-            <li ng-switch-when="IMAGE">
+            </div>
+            <div ng-switch-when="IMAGE">
                 <ng-include src="'views/widget/widget-image.view.client.html'"/>
-            </li>
-            <li ng-switch-when="YOUTUBE">
+            </div>
+            <div ng-switch-when="YOUTUBE" class="youtube-widget">
                 <ng-include src="'views/widget/widget-youtube.view.client.html'"/>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 
 </div>
