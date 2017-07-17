@@ -5,7 +5,7 @@ module.exports = function(app) {
         process.env.MONGODB_URI ||
         'mongodb://localhost/CS5610';
 
-    var conn = mongoose.createConnection(uristring, function (err, res) {
+    var conn = mongoose.createConnection(uristring, function (err) {
         if (err) {
             console.log ('ERROR connecting to: ' + uristring + '. ' + err);
         } else {

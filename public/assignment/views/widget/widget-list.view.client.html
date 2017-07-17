@@ -18,32 +18,31 @@
 </nav>
 
 <div class="container">
-    <div ng-repeat="widget in model.widgets">
-        <div class="pull-right">
-            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget" class="pull-right">
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
-            </a>
-            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}"  class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-        </div>
-        <div ng-switch="widget.type" id="sortable">
-            <div ng-switch-when="HEADING">
-                <ng-include src="'views/widget/widget-heading.view.client.html'"/>
+    <div wbdv-sortable callback="model.sortItems(start, end)">
+        <div ng-repeat="widget in model.widgets">
+            <div class="pull-right">
+                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget" class="pull-right">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </a>
+                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}"  class="pull-right">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
             </div>
-            <div ng-switch-when="IMAGE">
-                <ng-include src="'views/widget/widget-image.view.client.html'"/>
-            </div>
-            <div ng-switch-when="YOUTUBE">
-                <ng-include src="'views/widget/widget-youtube.view.client.html'"/>
+            <div ng-switch="widget.type">
+                <div ng-switch-when="HEADING">
+                    <ng-include src="'views/widget/widget-heading.view.client.html'"/>
+                </div>
+                <div ng-switch-when="IMAGE">
+                    <ng-include src="'views/widget/widget-image.view.client.html'"/>
+                </div>
+                <div ng-switch-when="YOUTUBE">
+                    <ng-include src="'views/widget/widget-youtube.view.client.html'"/>
+                </div>
             </div>
         </div>
     </div>
 
 </div>
-
-
-
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fuild">

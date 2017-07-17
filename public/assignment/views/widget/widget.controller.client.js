@@ -27,6 +27,16 @@
                 vm.error = res.data;
             }
         );
+
+        vm.sortItems = function (start, end) {
+
+            //console.log("start: " + start + " end: " + end);
+            var item = vm.widgets[start];
+
+            var del_index = start < end ? start:start+1;
+            vm.widgets.splice(end, 0, item);
+            vm.widgets.splice(del_index, 1);
+        }
     }
 
     function NewWidgetController($routeParams){
