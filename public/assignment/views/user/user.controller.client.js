@@ -26,7 +26,7 @@
         vm.error = null;
         vm.register = register;
 
-        function register(username, password, vpassword) {
+        /*function register(username, password, vpassword) {
             if (username === undefined || username === null || username === "" || password === undefined || password === "") {
                 vm.error = "Username and Passwords cannot be empty.";
                 return;
@@ -64,6 +64,49 @@
                             vm.error = "Create user failed.";
                         }
                     );
+                }
+            );
+        }
+    }*/
+
+        function register(username, password, vpassword) {
+            if (username === undefined || username === null || username === "" || password === undefined || password === "") {
+                vm.error = "Username and Passwords cannot be empty.";
+                return;
+            }
+            if (password !== vpassword) {
+                vm.error = "Password does not match.";
+                return;
+            }
+            user = {
+                username: username,
+                password: password,
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: ""
+            };
+            UserService.createUser(user).then(
+                function successCallback(res) {
+                    var newUser = res.data;
+                    if(newUser == undefined || newUser == null || newUser == ""){
+                        vm.error = "Username already exists.";
+                    }
+                    else{
+                         return UserService.findUserByUsername(username).then(
+                            function success(res) {
+                                var userCreated = res.data;
+                                $location.url("/user/" + userCreated._id);
+                            },
+                            function errorCallback(res) {
+                                vm.error = "User created but cannot be found.";
+                            }
+                        );
+                    }
+
+                },
+                function error(res) {
+                    vm.error = "Create user failed." + res.data;
                 }
             );
         }

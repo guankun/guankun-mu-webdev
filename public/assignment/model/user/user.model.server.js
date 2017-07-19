@@ -26,7 +26,23 @@ module.exports = function(mongoose, conn){
             websites: new Array(),
             dateCreated: Date.now()
         }
-        return userModel.create(newUser);
+        return userModel.findOne({username: user.username}).then(
+            function(existingUser){
+                if(existingUser == null || existingUser == undefined || existingUser == ""){
+                    return userModel.create(newUser);
+                }
+                else{
+                    return new Promise(function(resolve, reject){
+                        resolve(undefined);
+                    });
+                }
+            },
+            function (err){
+                return new Promise(function(resolve, reject){
+                    reject(err);
+                });
+            }
+        );
     }
 
     function findUserById(userId){

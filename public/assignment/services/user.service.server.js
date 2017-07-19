@@ -27,7 +27,7 @@ module.exports = function(app, models){
                 res.status(200).send(newUser);
             },
             function errorCallback(error){
-                res.status(500).send("User careation failed. " + error);
+                res.status(400).send("User creation failed. " + error);
             }
         );
     }
