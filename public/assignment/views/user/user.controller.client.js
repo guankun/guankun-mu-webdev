@@ -11,12 +11,17 @@
         vm.user = {};
         vm.login = login;
         function login(user) {
+            if(!user.username || !user.password){
+                vm.error = "Username and password cannot be empty!";
+                return;
+            }
             UserService
                 .login(user)
                 .then(
                     function (res) {
                         var user = res.data;
-                        $rootScope.currentUser = user;
+                        //$rootScope.currentUser = user;
+                        $window.localStorage.setItem("currentUser", angular.toJson(user));
                         $location.url("/profile");
                     },
                     function (res) {
@@ -103,7 +108,8 @@
             UserService.register(newUser).then(
                 function(res) {
                     var userCreated = res.data;
-                    $rootScope.currentUser = userCreated;
+                    //$rootScope.currentUser = userCreated;
+                    $window.localStorage.setItem("currentUser", angular.toJson(userCreated));
                     $location.url("/user/"+userCreated._id);
                 },
                 function error(res) {
@@ -118,7 +124,8 @@
         vm.updated = null;
         vm.logout = logout;
         vm.error = null;
-        vm.user = $rootScope.currentUser;
+        //vm.user = $rootScope.currentUser;
+        vm.user = JSON.parse($window.localStorage.getItem("currentUser"));
         UserService.findUserById(vm.user._id).then(
             function successCallback(res){
                 vm.user = res.data;
@@ -142,7 +149,8 @@
                 .logout()
                 .then(
                     function(res) {
-                        $rootScope.currentUser = null;
+                        //$rootScope.currentUser = null;
+                        $window.localStorage.setItem("currentUser", null);
                         $location.url("/");
                     },
                     function (response) {
