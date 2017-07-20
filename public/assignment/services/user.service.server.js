@@ -5,6 +5,8 @@ module.exports = function(app, models){
         {_id: "345", username: "charly",   password: "charly",  email: "charly@neu.edu.cn", firstName: "Charly", lastName: "Garcia"  },
         {_id: "456", username: "jannunzi", password: "jannunzi", email: "jannunzi@neu.edu.cn",firstName: "Jose",   lastName: "Annunzi" }
     ];*/
+
+    var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
     var auth = authorized;
@@ -34,10 +36,10 @@ module.exports = function(app, models){
 
     function localStrategy(username, password, done) {
         models.userModel
-            .findUserByCredentials(username, password)
+            .findUserByUsername(username, password)
                 .then(
-                    function(user) {
-                        if(user && user.username === username && user.password === password){
+                    function (user) {
+                        if(user && user.username === username && bcrypt.compareSync(password, user.password)){
                             return done(null, user);
                         } else {
                             return done("Wrong username or password! ", false);
@@ -97,11 +99,12 @@ module.exports = function(app, models){
 
     function logout(req, res) {
         req.logOut();
-        res.send(200);
+        res.sendStatus(200);
     }
 
     function register (req, res) {
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
         models.userModel.createUser(user).then(
             function(user){
                 if(user){
@@ -186,7 +189,6 @@ module.exports = function(app, models){
     function updateUser(req, res){
         var uid = req.params.uid;
         var newUser = req.body;
-
         models.userModel.updateUser(uid, newUser).then(
             function successCallback(user){
                 if(user){

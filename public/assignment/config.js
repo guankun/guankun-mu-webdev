@@ -12,6 +12,7 @@
                     deferred.resolve(user);
                 } else {
                     deferred.reject();
+                    alert("You are not logged in or unauthorised!");
                     $location.url('/');
                 }
             });

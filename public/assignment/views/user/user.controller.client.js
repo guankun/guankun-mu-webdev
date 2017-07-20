@@ -110,7 +110,7 @@
                     var userCreated = res.data;
                     //$rootScope.currentUser = userCreated;
                     $window.localStorage.setItem("currentUser", angular.toJson(userCreated));
-                    $location.url("/user/"+userCreated._id);
+                    $location.url("/profile");
                 },
                 function error(res) {
                     vm.error = "User Register failed. " + res.data;
