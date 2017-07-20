@@ -33,7 +33,7 @@ module.exports = function(mongoose, conn){
                 }
                 else{
                     return new Promise(function(resolve, reject){
-                        resolve(undefined);
+                        reject('Username already exists.');
                     });
                 }
             },

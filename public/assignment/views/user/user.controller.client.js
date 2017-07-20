@@ -5,71 +5,44 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($location, UserService) {
+    function LoginController($location, $rootScope, $window, UserService) {
         var vm = this;
         vm.error = null;
+        vm.user = {};
         vm.login = login;
-        function login(username, password) {
-            UserService.findUserByCredentials(username, password).then(
-                function successCallback(res) {
-                    $location.url("/user/" + res.data._id);
-                },
-                function errorCallback(res){
-                    vm.error = res.data;
-                }
-            );
+        function login(user) {
+            UserService
+                .login(user)
+                .then(
+                    function (res) {
+                        var user = res.data;
+                        $rootScope.currentUser = user;
+                        $location.url("/profile");
+                    },
+                    function (res) {
+                        vm.error = res.data;
+                    }
+                );
         }
+            /*function login(username, password) {
+                UserService.findUserByCredentials(username, password).then(
+                    function successCallback(res) {
+                        $location.url("/user/" + res.data._id);
+                    },
+                    function errorCallback(res){
+                        vm.error = res.data;
+                    }
+                );
+            }*/
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($location, $rootScope, $window, UserService) {
         var vm = this;
+        vm.user = {};
         vm.error = null;
         vm.register = register;
 
         /*function register(username, password, vpassword) {
-            if (username === undefined || username === null || username === "" || password === undefined || password === "") {
-                vm.error = "Username and Passwords cannot be empty.";
-                return;
-            }
-            if (password !== vpassword) {
-                vm.error = "Password does not match.";
-                return;
-            }
-            UserService.findUserByUsername(username).then(
-                function successCallback(response){
-                    vm.error = "Username already exists.";
-                },
-                function errorCallback(response) {
-                    user = {
-                        username: username,
-                        password: password,
-                        firstName: "",
-                        lastName: "",
-                        email: "",
-                        phone: ""
-                    };
-                    UserService.createUser(user).then(
-                        function successCallback(res) {
-                            UserService.findUserByUsername(username).then(
-                                function success(res) {
-                                    user = res.data;
-                                    $location.url("/user/" + user._id);
-                                },
-                                function errorCallback(res) {
-                                    vm.error = "User created but cannot be found.";
-                                }
-                            );
-                        },
-                        function error(res) {
-                            vm.error = "Create user failed.";
-                        }
-                    );
-                }
-            );
-        }
-    }*/
-
-        function register(username, password, vpassword) {
             if (username === undefined || username === null || username === "" || password === undefined || password === "") {
                 vm.error = "Username and Passwords cannot be empty.";
                 return;
@@ -109,15 +82,44 @@
                     vm.error = "Create user failed." + res.data;
                 }
             );
+        }*/
+
+        function register(user){
+            var username = user.username;
+            var password = user.password;
+            var vpassword = user.vpassword;
+            if (username === undefined || username === null || username === "" || password === undefined || password === "") {
+                vm.error = "Username and Passwords cannot be empty.";
+                return;
+            }
+            if (password !== vpassword) {
+                vm.error = "Password does not match.";
+                return;
+            }
+            var newUser = {
+                username: username,
+                password: password
+            }
+            UserService.register(newUser).then(
+                function(res) {
+                    var userCreated = res.data;
+                    $rootScope.currentUser = userCreated;
+                    $location.url("/user/"+userCreated._id);
+                },
+                function error(res) {
+                    vm.error = "User Register failed. " + res.data;
+        }
+            );
         }
     }
 
-    function ProfileController($routeParams, $location, $timeout, UserService) {
+    function ProfileController($routeParams, $location, $timeout, $rootScope, $window, UserService) {
         var vm = this;
         vm.updated = null;
+        vm.logout = logout;
         vm.error = null;
-
-        UserService.findUserById($routeParams.uid).then(
+        vm.user = $rootScope.currentUser;
+        UserService.findUserById(vm.user._id).then(
             function successCallback(res){
                 vm.user = res.data;
                 vm.uid = $routeParams.uid;
@@ -135,13 +137,27 @@
             }
         );
 
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function(res) {
+                        $rootScope.currentUser = null;
+                        $location.url("/");
+                    },
+                    function (response) {
+                        vm.error = res.data;
+                    }
+                );
+        }
+
         function updateUser() {
             var update_user = vm.user;
             update_user.username = vm.username;
             update_user.email = vm.email;
             update_user.firstName = vm.firstName;
             update_user.lastName = vm.lastName;
-            UserService.updateUser($routeParams.uid, update_user).then(
+            UserService.updateUser(update_user._id, update_user).then(
                 function successCallback(res){
                     vm.updated = "Profile changes saved!";
                 },

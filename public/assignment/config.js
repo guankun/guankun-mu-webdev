@@ -4,6 +4,20 @@
         .config(configuration);
 
     function configuration($routeProvider) {
+        var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+            var deferred = $q.defer();
+            $http.get('/api/loggedin').success(function(user) {
+                $rootScope.errorMessage = null;
+                if (user !== '0') {
+                    deferred.resolve(user);
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+            return deferred.promise;
+        };
+
         $routeProvider
             .when('/', {
                  templateUrl : "views/user/login.view.client.html",
@@ -20,10 +34,11 @@
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            .when('/user/:uid', {
-                templateUrl : "views/user/profile.view.client.html",
+            .when ("/profile", {
+                templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { loggedin: checkLoggedin }
             })
             .when('/user/:uid/website', {
                 templateUrl : "views/website/website-list.view.client.html",
@@ -78,5 +93,7 @@
             .otherwise({
                 redirectTo : "/"
             });
+
+
     }
 })();
