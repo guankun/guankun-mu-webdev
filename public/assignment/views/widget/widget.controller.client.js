@@ -35,6 +35,9 @@
             }
         }
 
+        vm.setHTML = function (widget){
+            return widget.text;
+        }
 
         vm.sortItems = function (start, end) {
 
