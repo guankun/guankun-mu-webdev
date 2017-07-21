@@ -28,6 +28,14 @@
             }
         );
 
+        vm.setStyle = function (widget) {
+            return {
+                "font-size": widget.size + 'px',
+                "width": widget.width + 'px'
+            }
+        }
+
+
         vm.sortItems = function (start, end) {
 
             //console.log("start: " + start + " end: " + end);
@@ -141,7 +149,6 @@
         vm.width = null;
         vm.size = null;
         vm.text = null;
-        vm.width = null;
         vm.url = null;
 
         vm.widget = null;
@@ -152,7 +159,7 @@
                 vm.widget = res.data;
                 vm.name = vm.widget.name;
                 vm.widgetType = vm.widget.type;
-                vm.size = vm.widget.size ? vm.widget.size : 0;
+                vm.size = vm.widget.size ? vm.widget.size : 10;
                 vm.width = vm.widget.width;
                 vm.text = vm.widget.text;
                 vm.url = vm.widget.url;

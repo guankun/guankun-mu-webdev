@@ -25,7 +25,7 @@
                         $location.url("/profile");
                     },
                     function (res) {
-                        vm.error = res.data;
+                        vm.error = "Wrong username or password.";
                     }
                 );
         }

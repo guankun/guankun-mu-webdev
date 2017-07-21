@@ -23,7 +23,7 @@ module.exports = function(mongoose, conn) {
             width: widget.width,
             height: widget.height,
             rows: 0,
-            size: 0,
+            size: 10,
             class: widget.class,
             icon: widget.icon,
             deletable: widget.deletable,
