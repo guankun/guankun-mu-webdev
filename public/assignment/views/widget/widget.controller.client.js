@@ -94,7 +94,9 @@
                 rows: vm.rows,
                 size: vm.size,
                 class: vm.class,
-                icon: vm.icon
+                icon: vm.icon,
+                deletable: vm.deletable,
+                formatted: vm.formatted
             };
             WidgetService.createWidget(vm.pid, w).then(
                 function successCallback(res){
@@ -166,6 +168,10 @@
                 vm.width = vm.widget.width;
                 vm.text = vm.widget.text;
                 vm.url = vm.widget.url;
+                vm.placeholder = vm.widget.placeholder;
+                vm.rows = vm.widget.rows;
+                vm.formatted = vm.widget.formatted;
+                vm.deletable = vm.widget.deletable;
             },
             function errorCallback(res){
                 vm.error = res.data;
@@ -194,6 +200,10 @@
             updatedWidget.size = vm.size;
             updatedWidget.url = vm.url;
             updatedWidget.width = vm.width;
+            updatedWidget.rows = vm.rows;
+            updatedWidget.placeholder = vm.placeholder;
+            updatedWidget.formatted = vm.formatted;
+            updatedWidget.deletable = vm.deletable;
 
             WidgetService.updateWidget($routeParams.wgid, updatedWidget).then(
                 function successCallback(res){

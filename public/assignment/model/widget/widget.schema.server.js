@@ -9,7 +9,7 @@ module.exports = function(mongoose) {
         },
         type: {
             type: String,
-            enum : ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'INPUT'],
+            enum : ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'TEXT'],
             default: 'HEADING'
         },
         name: {type: String, required: true},
