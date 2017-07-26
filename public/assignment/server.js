@@ -13,12 +13,12 @@ module.exports = function(app) {
         }
     });
 
-    var models = require("./model/models.server.js")(mongoose, conn);
+    var models = require("./server_side/model/models.server.js")(mongoose, conn);
 
-    require("./services/user.service.server.js")(app, models);
-    require("./services/website.service.server.js")(app, models);
-    require("./services/page.service.server.js")(app, models);
-    require("./services/widget.service.server.js")(app, models);
+    require("./server_side/services/user.service.server.js")(app, models);
+    require("./server_side/services/website.service.server.js")(app, models);
+    require("./server_side/services/page.service.server.js")(app, models);
+    require("./server_side/services/widget.service.server.js")(app, models);
 
 
 };

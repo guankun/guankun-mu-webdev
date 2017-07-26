@@ -30,19 +30,19 @@
             </div>
             <div ng-switch="widget.type">
                 <div ng-switch-when="HEADING">
-                    <ng-include src="'views/widget/widget-heading.view.client.html'"/>
+                    <ng-include src="'client_side/views/widget/widget-heading.view.client.html'"/>
                 </div>
                 <div ng-switch-when="IMAGE">
-                    <ng-include src="'views/widget/widget-image.view.client.html'"/>
+                    <ng-include src="'client_side/views/widget/widget-image.view.client.html'"/>
                 </div>
                 <div ng-switch-when="YOUTUBE" ng-style="model.setStyle(widget)"  >
-                    <ng-include src="'views/widget/widget-youtube.view.client.html'"/>
+                    <ng-include src="'client_side/views/widget/widget-youtube.view.client.html'"/>
                 </div>
                 <div ng-switch-when="HTML">
-                    <ng-include src="'views/widget/widget-html.view.client.html'"/>
+                    <ng-include src="'client_side/views/widget/widget-html.view.client.html'"/>
                 </div>
                 <div ng-switch-when="TEXT">
-                    <ng-include src="'views/widget/widget-text.view.client.html'"/>
+                    <ng-include src="'client_side/views/widget/widget-text.view.client.html'"/>
                 </div>
             </div>
         </div>
