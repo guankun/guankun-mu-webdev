@@ -150,7 +150,7 @@ module.exports = function(app, models){
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        var newUrl = '/uploads/'+filename;
+        var newUrl = '/assignment/uploads/'+filename;
 
         if(widgetId == -1){ // create new widget
             res.status(200).send(newUrl);

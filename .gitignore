@@ -61,3 +61,5 @@ typings/
 .idea
 
 public/uploads*
+public/assignment/uploads*
+public/project/uploads*
